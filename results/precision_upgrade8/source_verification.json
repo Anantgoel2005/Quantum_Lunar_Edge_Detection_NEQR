@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "live_bits": 8,
+  "new_default_path": "results/variants/neqr8/row0",
+  "historical_four_bit_metadata_preserved": true,
+  "before_source_matches_frozen_four_bit_benchmark": true,
+  "shared_assets_identical": {
+    "QPIE": {
+      "visualization/state_preparation.py": "bbbfd96c474b6f28bc898a1af7983f77f991ec44ddc97d1a931218d8c00bbe87",
+      "visualization/state_preparation.html": "4eb9926d8fc277d01ec47eef87ade417bbcf16d322ed40cfab5f5498187a09e6"
+    },
+    "FRQI": {
+      "visualization/state_preparation.py": "bbbfd96c474b6f28bc898a1af7983f77f991ec44ddc97d1a931218d8c00bbe87",
+      "visualization/state_preparation.html": "4eb9926d8fc277d01ec47eef87ade417bbcf16d322ed40cfab5f5498187a09e6"
+    },
+    "NEQR": {
+      "visualization/state_preparation.py": "bbbfd96c474b6f28bc898a1af7983f77f991ec44ddc97d1a931218d8c00bbe87",
+      "visualization/state_preparation.html": "4eb9926d8fc277d01ec47eef87ade417bbcf16d322ed40cfab5f5498187a09e6"
+    }
+  },
+  "current_variant_sha256": "e7c7385df176144566a0b33b88176ff2669c2240fbfeb35053fd7e0385cd44ae"
+}

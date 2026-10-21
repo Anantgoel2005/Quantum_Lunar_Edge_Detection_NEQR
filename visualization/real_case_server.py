@@ -16,9 +16,10 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from visualization.trace_store import write_json_atomic
 from preprocessing.upload_image import preprocess_upload,MAX_BYTES
+from quantum.variant_circuit import INTENSITY_BITS
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT/'results/variants/neqr/row0'
+OUTPUT = ROOT/'results/variants'/f'neqr{INTENSITY_BITS}'/'row0'
 
 
 class DetectionJob:
@@ -39,7 +40,7 @@ class DetectionJob:
             source=output/'source.bin'
             source.write_bytes(body)
             info=preprocess_upload(source,output)
-            for asset in ('index.html','gate_trace_view.js','live_pipeline_view.js'):
+            for asset in ('index.html','gate_trace_view.js','live_pipeline_view.js','state_preparation.html'):
                 shutil.copyfile(OUTPUT/asset,output/asset)
             self.process=None
             self.output=output

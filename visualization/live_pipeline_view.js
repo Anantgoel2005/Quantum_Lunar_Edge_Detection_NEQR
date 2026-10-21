@@ -33,6 +33,8 @@
    const percentage=s.status==='complete'?100:s.total_tiles?100*s.completed_tiles/s.total_tiles:0;
    get('bar').style.width=`${percentage}%`;document.querySelector('.progress').setAttribute('aria-valuenow',percentage.toFixed(0));
    get('finished').hidden=s.status!=='complete';
+   get('detector-comparison').hidden=s.status!=='complete';
+   document.querySelector('.files').hidden=s.status!=='complete';
    if(s.status==='running'||previous!==s.status&&s.status==='complete')image('live','live_strength.png');
    if(s.status==='running'&&previous!=='running')image('source-preview','input.png');
    if(previous!==s.status&&s.status==='complete'){

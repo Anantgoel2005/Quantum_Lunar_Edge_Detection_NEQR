@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "apps": [
+    {
+      "encoding": "QPIE",
+      "port": 8766,
+      "status": "complete",
+      "qubits": 8,
+      "brightness_qubits": 0,
+      "native_input_ready": true,
+      "actual_preparation_example_ready": true
+    },
+    {
+      "encoding": "FRQI",
+      "port": 8768,
+      "status": "complete",
+      "qubits": 9,
+      "brightness_qubits": 1,
+      "native_input_ready": true,
+      "actual_preparation_example_ready": true
+    },
+    {
+      "encoding": "NEQR",
+      "port": 8769,
+      "status": "idle",
+      "qubits": 16,
+      "brightness_qubits": 8,
+      "native_input_ready": true,
+      "actual_preparation_example_ready": true
+    }
+  ]
+}

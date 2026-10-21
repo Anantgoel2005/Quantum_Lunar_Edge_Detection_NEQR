@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "encoding": "NEQR",
+  "qubits": 10,
+  "exported_primitive_state_equivalent": true,
+  "fidelity": 1.0000000000000355,
+  "qasm_byte_hash": "passed"
+}

@@ -1,0 +1,7 @@
+Running full tile (512, 512), 5 input bands
+Quantum execution: 32/1369 tiles; 128 circuits; 19.9s
+Quantum execution: 48/1369 tiles; 192 circuits; 31.6s
+Quantum execution: 64/1369 tiles; 256 circuits; 43.9s
+Quantum execution: 80/1369 tiles; 320 circuits; 56.4s
+Quantum execution: 96/1369 tiles; 384 circuits; 67.6s
+Quantum execution: 128/1369 tiles; 512 circuits; 83.7s

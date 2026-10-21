@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "encoding": "FRQI",
+  "qubits": 3,
+  "exported_primitive_state_equivalent": true,
+  "fidelity": 1.0000000000000009,
+  "qasm_byte_hash": "passed"
+}

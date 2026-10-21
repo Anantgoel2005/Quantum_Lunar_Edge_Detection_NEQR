@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "viewers": [
+    {
+      "encoding": "QPIE",
+      "qubits": 8,
+      "brightness_qubits": 0,
+      "instructions": 510,
+      "paging_angles_download_and_input_hash": "passed"
+    },
+    {
+      "encoding": "FRQI",
+      "qubits": 9,
+      "brightness_qubits": 1,
+      "instructions": 1022,
+      "paging_angles_download_and_input_hash": "passed"
+    },
+    {
+      "encoding": "NEQR",
+      "qubits": 16,
+      "brightness_qubits": 8,
+      "instructions": 131070,
+      "paging_angles_download_and_input_hash": "passed"
+    }
+  ],
+  "uploaded_preparation": {
+    "encoding": "NEQR",
+    "qubits": 16,
+    "brightness_qubits": 8,
+    "instructions": 131070,
+    "paging_angles_download_and_input_hash": "passed"
+  },
+  "image_shape": [
+    16,
+    16
+  ],
+  "brightness_bits": 8,
+  "qubits": 16,
+  "circuits": 16,
+  "shots": 131072,
+  "trace_circuits_checked": 4,
+  "browser_errors": [],
+  "mobile_layouts": "all passed",
+  "sparse_state_grid": "passed",
+  "actual_measured_upload": true
+}

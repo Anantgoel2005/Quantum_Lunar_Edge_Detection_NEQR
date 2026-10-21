@@ -44,3 +44,6 @@ data/sombench/real_case/repo.json
 # Private uploaded images and local upload verification artifacts
 results/user_images/
 results/upload_verification/
+
+# Local pre-change source backup
+results/precision_upgrade8/before/

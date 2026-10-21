@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "encoding": "QPIE",
+      "qubits": 8,
+      "completed_uploaded_image": [
+        16,
+        16
+      ],
+      "circuits_replayed": 16,
+      "shots_replayed": 131072,
+      "max_replay_error": 0.0,
+      "new_input_preparation_export": "passed"
+    },
+    {
+      "encoding": "FRQI",
+      "qubits": 9,
+      "completed_uploaded_image": [
+        16,
+        16
+      ],
+      "circuits_replayed": 16,
+      "shots_replayed": 131072,
+      "max_replay_error": 7.105427357601002e-15,
+      "new_input_preparation_export": "passed"
+    },
+    {
+      "encoding": "NEQR",
+      "qubits": 16,
+      "completed_uploaded_image": [
+        16,
+        16
+      ],
+      "circuits_replayed": 16,
+      "shots_replayed": 131072,
+      "max_replay_error": 0.0,
+      "new_input_preparation_export": "passed"
+    }
+  ],
+  "circuits_replayed": 48,
+  "shots_replayed": 393216
+}

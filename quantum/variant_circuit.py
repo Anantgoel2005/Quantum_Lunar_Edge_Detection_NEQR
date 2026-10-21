@@ -11,7 +11,7 @@ from quantum.simulation import validate_image
 from quantum.qhed_circuit import qhed_counts_to_edge_map
 
 ENCODING='NEQR'
-INTENSITY_BITS=4
+INTENSITY_BITS=8
 
 
 def build_variant_circuit(image,direction='horizontal',pair_offset=0):
@@ -34,7 +34,9 @@ def build_variant_circuit(image,direction='horizontal',pair_offset=0):
         vector[positions]=np.cos(angles)/math.sqrt(image.size)
         vector[(1<<n_pos)+positions]=np.sin(angles)/math.sqrt(image.size)
     else:
-        levels=np.floor(flat/255*((1<<n_int)-1)).astype(int)
+        # Multiply first: dividing by 255 before multiplying back can round an
+        # integer just below itself and incorrectly lose one grayscale level.
+        levels=np.floor(flat*((1<<n_int)-1)/255).astype(int)
         vector[(levels<<n_pos)+positions]=1/math.sqrt(image.size)
     qc=QuantumCircuit(n_qubits,n_qubits,name=f'{ENCODING}_{direction}_{pair_offset}')
     # Native Initialize prepares the exact named image state in ideal Aer.

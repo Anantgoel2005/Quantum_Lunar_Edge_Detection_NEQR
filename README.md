@@ -2,7 +2,7 @@
 
 An independent NEQR live quantum edge-detection variant of [the original QPIE system](https://github.com/SamradhSahni/Quantum_Lunar_Edge_Detection), based on commit `32f49ddf9752a7152508e87f08200f59ec3eb199`. The original repository is unchanged. This repository preserves its Git history and attribution. It is an independent history-preserving copy rather than a GitHub-network fork, because the FRQI variant already occupies the personal account’s fork in that network.
 
-NEQR uses eight position qubits plus four binary intensity qubits by default (16 brightness levels), for 12 qubits per 16x16 block. Pixel values are quantized as floor(15 I/255). The state is a uniform superposition of |quantized_intensity_i>|position_i>. Position-register Hadamard interference gives p = 0 when adjacent quantized values agree, and p = 1/N when they differ, after summing over the intensity register. The runner estimates N p as an inequality signal. It does not compute an intensity-gradient magnitude. No measured image reconstruction or classical gradient supplies the quantum edge map. Four-bit precision is an explicit tradeoff for live simulation; INTENSITY_BITS in quantum/variant_circuit.py can be set to 8 for 16 encoding qubits, with higher simulation and trace costs.
+NEQR uses eight position qubits plus eight binary intensity qubits (256 brightness levels), for 16 qubits per 16x16 block. Every integer grayscale value from 0 to 255 is preserved exactly. The state is a uniform superposition of |intensity_i>|position_i>. Position-register Hadamard interference gives p = 0 for equal neighboring intensities and p = 1/N for different values, after summing the intensity register. The runner estimates N p as an inequality signal, not an intensity-gradient magnitude. Historical four-bit results retain their original precision and are not eight-bit results. No measured-image reconstruction or classical gradient supplies the quantum edge map. The 16-qubit statevector is 16 times larger than the prior 12-qubit configuration.
 
 ## Run locally
 
@@ -26,18 +26,21 @@ Execution is on the local ideal Qiskit Aer simulator, not quantum hardware. Aer-
 
 The actual detector is `quantum/variant_circuit.py`, called by `quantum/full_image.py`. Edge maps are reconstructed only from that circuit's measured counts. Classical work handles input preparation, probability calibration, halo stitching and final Otsu thresholding. Saved statevectors are used only for inspection/animation, never for the edge output. Playback shows actual checkpoints from the first inference block in each completed batch; it is slowed playback, not a hardware gate clock.
 
-The NEQR lunar outputs go to `results/variants/neqr/row0/`. Historical QPIE outputs remain in `results/real_case/row0/` for attribution and reference; they are not served as NEQR outputs. Private uploads and verification fixtures remain excluded from Git. The original QPIE implementation is retained as `quantum/qpie_full_image.py` for regression tests and comparison. The inherited hybrid NEQR demonstration is a historical baseline, not this fork's live detector.
+The NEQR lunar outputs go to `results/variants/neqr8/row0/`. Historical QPIE outputs remain in `results/real_case/row0/` for attribution and reference; they are not served as NEQR outputs. Private uploads and verification fixtures remain excluded from Git. The original QPIE implementation is retained as `quantum/qpie_full_image.py` for regression tests and comparison. The inherited hybrid NEQR demonstration is a historical baseline, not this fork's live detector.
 
 ## Validation
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 .\.venv\Scripts\python.exe -m pip install playwright
-.\.venv\Scripts\python.exe visualization/verify_upload.py
+.\.venv\Scripts\python.exe visualization/verify_precision8.py --neqr-only
 ```
 
-32 tests pass, including exact encoded-state checks, both axes and pair offsets, constant-intensity cancellation, real measured halo stitching, and trace/count audit consistency. Browser upload validation uses installed Microsoft Edge and verifies actual inference, playback, measurement audit, all four comparison panels, invalid-file handling, and mobile layout. `tests/test_full_image.py` explicitly retains the original QPIE gradient-calibration tests; `tests/test_variant.py` verifies this variant's distinct operator.
+37 tests pass, including all 256 grayscale levels, one-level neighbor differences, 16-qubit measured inference, exact encoded-state checks, both axes and pair offsets, constant-intensity cancellation, halo stitching, and trace/count audit consistency. Browser validation uses installed Microsoft Edge to check eight-bit inference, preparation gates and downloads, live playback, comparison panels and mobile layout. Omit `--neqr-only` with all three servers running to verify QPIE and FRQI preparation views too. `tests/test_full_image.py` retains the original QPIE gradient-calibration tests; `tests/test_variant.py` verifies this variant's inequality operator.
 
 ## Provenance
 
 Upstream: [SamradhSahni/Quantum_Lunar_Edge_Detection](https://github.com/SamradhSahni/Quantum_Lunar_Edge_Detection). Variant: [NEQR](https://github.com/Anantgoel2005/Quantum_Lunar_Edge_Detection_NEQR). SomBench dataset and Robbins crater catalog attribution are preserved in the run manifest and report; dataset license is CC BY 4.0. No new source-code license is introduced. See `README_QPIE_HISTORY.md` and inherited `report/` documents for the original analysis, limitations and results.
+
+
+Expanded preparation is available through the app’s “Inspect expanded state preparation” link. It displays the actual representative block’s Initialize decomposition, paged into U/CX/reset gates with exact angles and full QASM/JSON downloads. Exports are regenerated for each completed input. Historical four-bit results remain in `results/variants/neqr/row0/`.

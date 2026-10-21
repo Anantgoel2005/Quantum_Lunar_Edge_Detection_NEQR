@@ -7,14 +7,17 @@ import html
 import json
 
 import shutil
+import sys
 
 from pathlib import Path
 
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+from quantum.variant_circuit import INTENSITY_BITS
 
-OUTPUT = ROOT/'results/variants/neqr/row0'
+OUTPUT = ROOT/'results/variants'/f'neqr{INTENSITY_BITS}'/'row0'
 
 
 
@@ -40,7 +43,7 @@ def main():
 
 :root {color-scheme:light dark;--bg:light-dark(#f8fafb,#10171c);--fg:light-dark(#162936,#e8f0f5);--muted:light-dark(#526875,#a5bac6);--line:light-dark(#cbd7df,#334b59);--accent:light-dark(#116d82,#79d7e7);--surface:light-dark(#e4eef2,#1c2c35);--negative:light-dark(#b75c18,#f6b168);--gate-ink:light-dark(#ffffff,#102129);}
 
-*{box-sizing:border-box}input[type=file]{max-width:100%;min-width:0}body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:32px 24px}h1{font-size:28px;font-weight:500;margin:0 0 8px}h2{font-size:19px;font-weight:500;margin:24px 0 12px}p{line-height:1.5}.subtitle,.note{color:var(--muted)}.controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:24px 0 16px}button{font:inherit;border:0;border-radius:7px;padding:10px 16px;background:var(--fg);color:var(--bg);cursor:pointer}button:disabled{opacity:.5;cursor:wait}.status{font-variant-numeric:tabular-nums}.progress{height:6px;background:var(--surface);margin:14px 0}.progress div{height:100%;background:var(--accent);width:100%}.facts{display:flex;gap:24px;flex-wrap:wrap;color:var(--muted);font-variant-numeric:tabular-nums}.images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}figure{margin:0;min-width:0}figcaption{margin:0 0 10px}figure img{width:100%;height:auto;display:block;image-rendering:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}a{color:var(--accent)}.flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.flow span{background:var(--surface);padding:8px 12px}.flow b{font-weight:400}.files{display:flex;gap:20px;flex-wrap:wrap;margin:20px 0}.table-scroll{overflow-x:auto}.small{font-size:13px}footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px}
+[hidden]{display:none!important}*{box-sizing:border-box}input[type=file]{max-width:100%;min-width:0}body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:32px 24px}h1{font-size:28px;font-weight:500;margin:0 0 8px}h2{font-size:19px;font-weight:500;margin:24px 0 12px}p{line-height:1.5}.subtitle,.note{color:var(--muted)}.controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:24px 0 16px}button{font:inherit;border:0;border-radius:7px;padding:10px 16px;background:var(--fg);color:var(--bg);cursor:pointer}button:disabled{opacity:.5;cursor:wait}.status{font-variant-numeric:tabular-nums}.progress{height:6px;background:var(--surface);margin:14px 0}.progress div{height:100%;background:var(--accent);width:100%}.facts{display:flex;gap:24px;flex-wrap:wrap;color:var(--muted);font-variant-numeric:tabular-nums}.images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}figure{margin:0;min-width:0}figcaption{margin:0 0 10px}figure img{width:100%;height:auto;display:block;image-rendering:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}a{color:var(--accent)}.flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.flow span{background:var(--surface);padding:8px 12px}.flow b{font-weight:400}.files{display:flex;gap:20px;flex-wrap:wrap;margin:20px 0}.table-scroll{overflow-x:auto}.small{font-size:13px}footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px}
 
 .gate-panel{margin:24px 0;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.gate-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.gate-head h2{margin:0}.gate-controls{display:flex;gap:8px;flex-wrap:wrap}.gate-controls button{background:var(--surface);color:var(--fg);padding:8px 12px}.gate-grid{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:28px;align-items:start;margin-top:16px}.gate-svg{display:block;width:100%;height:264px;color:var(--fg)}.gate-svg text{fill:var(--fg);font-size:12px}.gate-stage{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-variant-numeric:tabular-nums;min-height:24px}.gate-state{display:block;width:100%;aspect-ratio:1;max-width:256px;margin:10px 0}.gate-legend{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}.gate-legend i{display:inline-block;width:10px;height:10px;background:var(--accent)}.gate-legend i.negative{background:var(--negative)}.gate-detail{margin:10px 0 0;font-size:13px;color:var(--muted);overflow-wrap:anywhere}.gate-active{animation:gate-flash .25s ease-out}.source-image{position:relative}.block-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.block-overlay rect{fill:none;stroke:var(--accent);stroke-width:3;vector-effect:non-scaling-stroke}.gate-loading{color:var(--muted)}@keyframes gate-flash{from{opacity:.45}to{opacity:1}}@media(prefers-reduced-motion:reduce){.gate-active{animation:none}}@media(max-width:900px){.gate-grid{grid-template-columns:minmax(0,1fr) 190px;gap:14px}}@media(max-width:650px){.gate-grid{grid-template-columns:1fr}.gate-state{max-width:256px}.gate-detail{font-size:12px}main{padding:22px 14px}.images{grid-template-columns:1fr}h1{font-size:23px}th,td{padding:9px 5px;font-size:13px}.facts{gap:12px}.controls{gap:10px}}
 
@@ -60,7 +63,7 @@ def main():
 
 <div class="progress" role="progressbar" aria-label="Completed quantum tiles" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div id="bar"></div></div>
 
-<div class="facts"><span id="circuits">0 circuits</span><span id="shots">0 shots</span><span id="qubit-count">12 qubits per circuit · 4-bit brightness</span><span id="elapsed">0.0 s</span></div>
+<div class="facts"><span id="circuits">0 circuits</span><span id="shots">0 shots</span><span id="qubit-count">__QUBITS__ qubits per circuit · __BITS__-bit brightness</span><span id="elapsed">0.0 s</span></div>
 
 <section id="gate-trace-panel" class="gate-panel" aria-label="Live gate checkpoint visualization">
 
@@ -68,7 +71,7 @@ def main():
 
 <div class="gate-detail" data-trace="source" role="status">Waiting for actual gate checkpoints from the detector</div>
 
-<div class="gate-grid"><div><div class="gate-stage"><span data-trace="pass">Four circuit passes per block</span><span data-trace="gate-label">NEQR → controlled shift → H → measurement</span></div><svg class="gate-svg" data-trace="diagram" role="img" aria-label="Twelve-qubit live quantum gate diagram"></svg><div class="gate-detail" data-trace="block">Block locations advance automatically</div><div class="gate-detail" data-trace="timing"></div><div class="gate-detail" data-trace="incoming"></div></div>
+<div class="gate-grid"><div><div class="gate-stage"><span data-trace="pass">Four circuit passes per block</span><span data-trace="gate-label">NEQR → controlled shift → H → measurement</span></div><svg class="gate-svg" data-trace="diagram" role="img" aria-label="__QUBITS__-qubit live quantum gate diagram"></svg><div class="gate-detail" data-trace="block">Block locations advance automatically</div><div class="gate-detail" data-trace="timing"></div><div class="gate-detail" data-trace="incoming"></div></div>
 
 <div><div class="small" data-trace="state-label">Actual saved statevector</div><svg class="gate-state" data-trace="state" role="img" aria-label="Saved amplitudes or observed measurement probability grid"></svg><div class="gate-legend"><i></i>Positive / measured <i class="negative"></i>Negative amplitude</div><div class="gate-detail" data-trace="norm"></div><div class="gate-detail" data-trace="measurement"></div><div class="gate-detail" data-trace="outcomes"></div></div></div>
 
@@ -80,7 +83,8 @@ def main():
 
 <div class="images"><figure><figcaption id="source-caption">Original grayscale image · mean of five TIFF bands</figcaption><div class="source-image"><img id="source-preview" src="input.png" alt="Complete real lunar terrain tile with craters and shadows"><svg class="block-overlay" viewBox="0 0 512 512" aria-label="Automatically traced block position"><rect id="active-block" width="14" height="14" style="display:none"></rect></svg></div></figure><figure><figcaption id="live-caption">NEQR inequality strength from measured circuit counts</figcaption><img id="live" src="live_strength.png" alt="Quantum edge strength reconstructed from measurement counts across the full tile"></figure></div>
 
-<h2>What actually runs</h2><p class="note">NEQR uses four brightness bits (16 levels) by default. This quantum operator detects whether neighboring quantized intensities differ; it does not measure how large that difference is.</p>
+<p><a href="state_preparation.html">Inspect expanded state preparation · actual U/CX gates</a></p>
+<h2>What actually runs</h2><p class="note">NEQR uses __BITS__ brightness bits (__LEVELS__ levels), preserving every 8-bit grayscale value. This quantum operator detects whether neighboring intensities differ; it does not measure how large that difference is.</p>
 
 <div class="flow" aria-label="Quantum processing workflow"><span>NEQR image preparation</span><b>→</b><span>Controlled coordinate shift</span><b>→</b><span>Hadamard intensity inequality</span><b>→</b><span>Measurement</span></div>
 
@@ -90,7 +94,7 @@ def main():
 
 <section id="finished" hidden><h2>Latest completed edge map</h2><div class="images"><figure><figcaption>Automatic thresholded quantum edges</figcaption><img id="edges" src="quantum_edges.png" alt="Automatically detected edges of the complete lunar tile"></figure><figure><figcaption id="overlay-caption">Catalog reference: green · measured edges: magenta · overlap: yellow</figcaption><img id="overlay" src="overlay.png" alt="Full-image overlay of measured quantum edges and approximate catalog crater outlines"></figure></div>
 
-<section id="detector-comparison"><h2>NEQR vs classical edge detection</h2>
+<section id="detector-comparison" hidden><h2>NEQR vs classical edge detection</h2>
 <p class="note">All four methods use the same grayscale working image. NEQR interference, Sobel and Robinson use automatic Otsu thresholds; Canny uses median-based automatic thresholds. Each panel shows the final binary edge map.</p>
 <div class="images"><figure><figcaption>NEQR interference · measured circuit counts</figcaption><img id="compare-quantum" src="quantum_edges.png" alt="Measured quantum edge map"></figure><figure><figcaption>Sobel · 3 × 3 gradient</figcaption><img id="compare-sobel" src="sobel_edges.png" alt="Sobel edge map on the same input"></figure><figure><figcaption>Canny · automatic thresholds</figcaption><img id="compare-canny" src="canny_edges.png" alt="Canny edge map on the same input"></figure><figure><figcaption>Robinson · eight compass directions</figcaption><img id="compare-robinson" src="robinson_edges.png" alt="Robinson edge map on the same input"></figure></div>
 <div class="table-scroll"><table><thead><tr><th>Method</th><th>Edge pixels</th><th>Image coverage</th></tr></thead><tbody id="comparison-stats"></tbody></table></div>
@@ -100,7 +104,7 @@ def main():
 
 <p class="note small">122 catalog annotations. This is an edge-detection demonstration on one train-split tile. The circular catalog polygons are approximate references; the output does not identify crater objects or prove quantum advantage.</p></div></section>
 
-<div class="files"><a href="report.md">Run report</a><a href="measurement_counts.jsonl.gz">Actual circuit counts</a><a href="representative_circuit.qasm">Primitive circuit example</a><a href="run_metadata.json">Provenance and execution details</a><a href="gate_trace.jsonl.gz">Actual gate checkpoint archive</a></div>
+<div class="files" hidden><a href="report.md">Run report</a><a href="measurement_counts.jsonl.gz">Actual circuit counts</a><a href="representative_circuit.qasm">Primitive circuit example</a><a href="run_metadata.json">Provenance and execution details</a><a href="gate_trace.jsonl.gz">Actual gate checkpoint archive</a></div>
 
 <footer id="dataset-credit" class="note small">Source: <a href="https://huggingface.co/datasets/nasa-ibm-ai4science/Sombench-WAC-Crater-Detection">NASA-IBM AI4Science SomBench</a>; Robbins (2019) crater catalog. Dataset license: CC BY 4.0.</footer>
 
@@ -108,9 +112,22 @@ def main():
 
 <script src="live_pipeline_view.js"></script></main></body></html>'''
 
+    page=page.replace('__QUBITS__',str(8+INTENSITY_BITS)).replace('__BITS__',str(INTENSITY_BITS)).replace('__LEVELS__',str(1<<INTENSITY_BITS))
     (OUTPUT/'index.html').write_text(page.replace('__METRIC_ROWS__',rows),encoding='utf-8')
 
-    for asset in ('gate_trace_view.js','live_pipeline_view.js'):
+    # A new precision configuration starts ready, never with old 4-bit results.
+    from PIL import Image
+    if not (OUTPUT/'input.png').exists():
+        old=ROOT/'results/variants/neqr/row0/input.png'
+        if old.exists():shutil.copyfile(old,OUTPUT/'input.png')
+        else:Image.new('L',(512,512)).save(OUTPUT/'input.png')
+    if not (OUTPUT/'live_strength.png').exists():Image.new('L',(512,512)).save(OUTPUT/'live_strength.png')
+    if not (OUTPUT/'progress.json').exists():
+        (OUTPUT/'progress.json').write_text(json.dumps({'status':'idle','encoding':'NEQR','intensity_bits':INTENSITY_BITS,'qubits_per_circuit':8+INTENSITY_BITS}),encoding='utf8')
+    if not (OUTPUT/'gate_trace_latest.json').exists():
+        (OUTPUT/'gate_trace_latest.json').write_text(json.dumps({'waiting':True}),encoding='utf8')
+
+    for asset in ('gate_trace_view.js','live_pipeline_view.js','state_preparation.html'):
 
         shutil.copyfile(ROOT/'visualization'/asset,OUTPUT/asset)
 

@@ -71,18 +71,20 @@
       text('norm',`State norm: ${point.norm.toFixed(6)}`);
       text('measurement','Statevector checkpoint from this inference circuit');
     }
-    const maximum=Math.max(...values.map(Math.abs),1e-20),cell=16,size=side*cell;
+    const maximum=values.reduce((peak,value)=>Math.max(peak,Math.abs(value)),1e-20),cell=16,size=side*cell;
     stateSvg.setAttribute('viewBox',`0 0 ${size} ${rows*cell}`);
-    let markup='<title>Actual saved computational-basis state or measured outcome probabilities</title>';
+    let markup=`<title>Actual saved computational-basis state or measured outcome probabilities</title><rect width="${size}" height="${rows*cell}" fill="var(--surface)"/>`;
     values.forEach((value,i)=>{
+      if(value===0)return;
       const x=(i%side)*cell,y=Math.floor(i/side)*cell,opacity=Math.abs(value)/maximum;
       const key=i.toString(2).padStart(circuit.qubits,'0');
       const detail=measurement?`|${key}⟩: ${(circuit.counts[key]||0)} shots, p=${probabilities[i].toFixed(6)}`:`|${key}⟩: amplitude ${point.real[i].toFixed(6)} + ${point.imag[i].toFixed(6)}i, p=${probabilities[i].toFixed(6)}`;
-      markup+=`<g><title>${escape(detail)}</title><rect x="${x}" y="${y}" width="15" height="15" fill="var(--surface)"/><rect x="${x}" y="${y}" width="15" height="15" fill="${!measurement&&value<0?'var(--negative)':'var(--accent)'}" opacity="${opacity}"/></g>`;
+      markup+=`<g><title>${escape(detail)}</title><rect x="${x}" y="${y}" width="15" height="15" fill="${!measurement&&value<0?'var(--negative)':'var(--accent)'}" opacity="${opacity}"/></g>`;
     });
     stateSvg.innerHTML=markup;
     stateSvg.setAttribute('data-display-mode',measurement?'measurements':'statevector');
-    const candidates=probabilities.map((probability,index)=>({probability,index})).sort((a,b)=>b.probability-a.probability).slice(0,3);
+    const candidates=[];probabilities.forEach((probability,index)=>{if(probability>0)candidates.push({probability,index});});
+    candidates.sort((a,b)=>b.probability-a.probability);candidates.length=Math.min(3,candidates.length);
     text('outcomes',candidates.map(item=>`|${item.index.toString(2).padStart(circuit.qubits,'0')}⟩ ${(100*item.probability).toFixed(1)}%`).join(' · '));
   }
   function display(item){

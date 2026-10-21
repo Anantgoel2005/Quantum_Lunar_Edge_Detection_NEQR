@@ -15,7 +15,7 @@ sys.path.insert(0,str(ROOT))
 from preprocessing.real_image import load_real_tiff
 from preprocessing.annotation_rasteriser import rasterise_image_annotations
 from quantum.full_image import run_full_image_qhed
-from quantum.variant_circuit import ENCODING,variant_description
+from quantum.variant_circuit import ENCODING,INTENSITY_BITS,variant_description
 from quantum.reconstruction import threshold_edge_map
 from classical.sobel import sobel_edge_binary
 from classical.canny import canny_edge_auto
@@ -82,7 +82,7 @@ def main():
             raise ValueError('TIFF dimensions do not match the annotation coordinate system')
         if not np.all(valid):
             raise ValueError('This case runner requires valid pixels across the whole tile')
-        output=args.output or ROOT/'results/variants'/ENCODING.lower()/f"row{manifest['metadata_row_index']}"
+        output=args.output or ROOT/'results/variants'/f'{ENCODING.lower()}{INTENSITY_BITS}'/f"row{manifest['metadata_row_index']}"
     output.mkdir(parents=True,exist_ok=True)
     save_gray(output/'input.png',image)
     save_gray(output/'live_strength.png',np.zeros_like(image))
@@ -136,6 +136,8 @@ def main():
     from qiskit import transpile,qasm3
     compiled = transpile(representative,basis_gates=['u','cx'],optimization_level=0,seed_transpiler=args.seed)
     (output/'representative_circuit.qasm').write_text(qasm3.dumps(compiled),encoding='utf-8')
+    from visualization.state_preparation import export_preparation
+    export_preparation(compiled,output,execution)
     (output/'representative_circuit.txt').write_text('\n'.join(line.rstrip() for line in str(representative.draw(output='text',fold=120)).splitlines())+'\n',encoding='utf-8')
     provenance = {key:manifest[key] for key in ['dataset','dataset_revision','metadata_row_index','annotation_split','metadata','source_urls','sha256','license','attribution','label_kind']} if manifest else {'kind':'user_upload','source':str(raw_path.name)}
     metadata = {'provenance':provenance,'loading':loading,'execution':execution,'threshold':threshold,'detector_comparison':comparison,

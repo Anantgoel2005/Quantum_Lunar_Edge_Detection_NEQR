@@ -1,0 +1,2 @@
+*.qasm -text
+*.svg whitespace=-blank-at-eol

@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "final_http_links": 4,
+  "readiness_json": "final_readiness.json",
+  "source_and_precision_evidence": "source_verification.json"
+}
