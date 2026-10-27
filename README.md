@@ -4,6 +4,12 @@ An independent NEQR live quantum edge-detection variant of [the original QPIE sy
 
 NEQR uses eight position qubits plus eight binary intensity qubits (256 brightness levels), for 16 qubits per 16x16 block. Every integer grayscale value from 0 to 255 is preserved exactly. The state is a uniform superposition of |intensity_i>|position_i>. Position-register Hadamard interference gives p = 0 for equal neighboring intensities and p = 1/N for different values, after summing the intensity register. The runner estimates N p as an inequality signal, not an intensity-gradient magnitude. Historical four-bit results retain their original precision and are not eight-bit results. No measured-image reconstruction or classical gradient supplies the quantum edge map. The 16-qubit statevector is 16 times larger than the prior 12-qubit configuration.
 
+## Quantum Studio: individual-shot circuit visualizer
+
+Open `visualization/circuit-studio/index.html` in a browser, or open it from the live detector. The offline simulator steps through every gate of an individual shot, showing complex amplitudes, probabilities, local Bloch vectors, measurement collapse, and shot counts. It includes Bell, GHZ, phase-interference, QPIE, and a 15-operation quantum-teleportation example with intermediate measurements and classical X/Z feed-forward. The studio is an ideal simulator for 1–6 qubits; it is separate from NEQR inference.
+
+Run `node --test visualization/circuit-studio/test-simulator.cjs` to verify its state evolution and measurement branches. The teleportation preset transfers Alice's arbitrary complex state to Bob in every one of its four measurement branches; its final verification measurement is always zero.
+
 ## Run locally
 
 Prerequisites: Git, **64-bit Python 3.12** (the tested version), and internet access for packages and the default dataset. Clone this repository and enter its directory first:
